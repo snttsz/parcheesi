@@ -4,10 +4,6 @@
 #include <conio.h>
 #define linha 60
 #define coluna 120
-#define VERMELHO   "\e[0;31m"
-#define VERDE "\e[0;32m"
-#define AMARELO "\e[0;33m"
-#define AZUL "\e[0;34m"
 
 
 char V[linha][coluna];
