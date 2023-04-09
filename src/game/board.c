@@ -8,12 +8,12 @@ void board()
     vertical_squares(4, 41);
     vertical_squares(4, 57);
     final_square();
-    write_insideMatrix("R1 B1 G1 Y1", 3, 7);
-    write_insideMatrix("R2 B2 G2 Y2", 3, 23);
-    write_insideMatrix("R3 B3 G3 Y3", 3, 39);
-    write_insideMatrix("R4 B4 G4 Y4", 3, 55);
+    writeString(Board, "R1 B1 G1 Y1", 3, 7);
+    writeString(Board, "R2 B2 G2 Y2", 3, 23);
+    writeString(Board, "R3 B3 G3 Y3", 3, 39);
+    writeString(Board, "R4 B4 G4 Y4", 3, 55);
     log_drawing();
-    draw_dices();
+    draw_dice();
     specialSquares_drawing();
 }
 
@@ -21,17 +21,17 @@ void log_drawing()
 {
     int j;
 
-    write_insideMatrix("MENU DE JOGADAS", 18, 92);
-    write_insideMatrix("JOGADOR ", 21, 82);
-    write_insideMatrix("RED", 21, 110);
-    write_insideMatrix("JOGADOR ", 23, 82);
-    write_insideMatrix("BLUE", 23, 110);
-    write_insideMatrix("JOGADOR ", 25, 82);
-    write_insideMatrix("GREEN", 25, 110);
-    write_insideMatrix("JOGADOR ", 27, 82);
-    write_insideMatrix("YELLOW", 27, 110);
-    write_insideMatrix("VEZ DO JOGADOR ", 11, 88);
-    write_insideMatrix("VEZ DO JOGADOR ", 29, 88);
+    writeString(Board, "GAMESTATE PANEL", 18, 92);
+    writeString(Board, "PLAYER ", 21, 82);
+    writeString(Board, "RED", 21, 110);
+    writeString(Board, "PLAYER ", 23, 82);
+    writeString(Board, "BLUE", 23, 110);
+    writeString(Board, "PLAYER ", 25, 82);
+    writeString(Board, "GREEN", 25, 110);
+    writeString(Board, "PLAYER ", 27, 82);
+    writeString(Board, "YELLOW", 27, 110);
+    writeString(Board, "PLAYER'S TURN ", 11, 88);
+    writeString(Board, "PLAYER'S TURN ", 29, 88);
 
     for (j = 81; j <= COLUMN - 2; j++)
     {
@@ -126,7 +126,7 @@ void vertical_squares(int line, int column)
     }
 }
 
-void draw_dices()
+void draw_dice()
 {
     int i, j;
 
@@ -171,26 +171,14 @@ void final_square()
 
     for (j = 49; j <= 52; j++)
     {
-        write_insideMatrix("__", j, 15);
-        write_insideMatrix("__", j, 27);
-        write_insideMatrix("__", j, 38);
-        write_insideMatrix("__", j, 50);
+        writeString(Board, "__", j, 15);
+        writeString(Board, "__", j, 27);
+        writeString(Board, "__", j, 38);
+        writeString(Board, "__", j, 50);
     }
 
-    write_insideMatrix("RED", 48, 15);
-    write_insideMatrix("BLUE", 48, 27);
-    write_insideMatrix("GREEN", 48, 38);
-    write_insideMatrix("YELLOW", 48, 50);
-}
-
-void write_insideMatrix(char *text, int line, int column)
-{
-    int i, j, size;
-
-    size = strlen(text) - 1;
-
-    for (i = column, j = 0; i <= column + size; i++, j++)
-    {
-        Board[line][i] = text[j];
-    }
+    writeString(Board, "RED", 48, 15);
+    writeString(Board, "BLUE", 48, 27);
+    writeString(Board, "GREEN", 48, 38);
+    writeString(Board, "YELLOW", 48, 50);
 }
