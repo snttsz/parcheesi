@@ -9,7 +9,7 @@ void InitGame(Player(*PlayerRedRef), Player(*PlayerBlueRef), Player(*PlayerYello
     
     constructBoard();
     InitPlayers(); 
-    printPlayers(0);
+    PlacePlayersName();
 
     return;
 }

@@ -13,8 +13,6 @@ int main()
     InitGame(playerRed, playerBlue, playerYellow, playerGreen);
 
 
-/*     printf("\n\n\n\n\n\n");
-
     for (int j = 0; j <= LINE - 2; j++)
     {
         for (int i = 0; i <= COLUMN - 2; i++)
@@ -22,7 +20,7 @@ int main()
             printf("%c", BoardMatrix[j][i]);
         }
         printf("\n");
-    } */
+    }
 
     return 0;
 }
