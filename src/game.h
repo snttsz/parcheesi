@@ -32,12 +32,12 @@ void PlacePlayersName();
 
 
 /* Logic Functions */
-void walk(char (*matrix)[MAX_COLUMNS], Player * player, int additional_squares, int column);
-void clean_dice(char (*matrix)[MAX_COLUMNS]);
-int roll_dice(char (*matrix)[MAX_COLUMNS]);
-void clean_actualSquare(char (*matrix)[MAX_COLUMNS], Player * player, int column);
-void check_square(char (*matrix)[MAX_COLUMNS], int line, int column);
-void check_special_squares(char (*matrix)[MAX_COLUMNS], int column, int final_column);
+extern void walk(char (*matrix)[MAX_COLUMNS], Player * player, int additional_squares, int column);
+extern void clean_dice(char (*matrix)[MAX_COLUMNS]);
+extern int roll_dice(char (*matrix)[MAX_COLUMNS]);
+extern void clean_actualSquare(char (*matrix)[MAX_COLUMNS], Player * player, int column);
+extern void check_square(char (*matrix)[MAX_COLUMNS], int line, int column);
+extern void check_special_squares(char (*matrix)[MAX_COLUMNS], int column, int final_column);
 
 
 /* Objects */
