@@ -1,7 +1,7 @@
 add_subdirectory(game)
 add_subdirectory(comm)
 
-add_library(gameConstructor gameConstructor.c gameConstructor.h)
-target_link_libraries(gameConstructor PUBLIC gameLogic)
+add_library(game game.c game.h)
+target_link_libraries(game PUBLIC gameLogic)
 
-target_include_directories(gameConstructor PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+target_include_directories(game PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})

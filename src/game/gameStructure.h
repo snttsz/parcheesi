@@ -29,7 +29,7 @@ typedef struct
 
 typedef struct
 {
-    Piece pieces[3];
+    Piece pieces[4];
     enum Color color;
     char * name;
 

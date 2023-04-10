@@ -11,7 +11,7 @@
 #define COLUMN 120
 
 /* Draws the complete board (like a constructor, call all functions bellow) */
-void board();
+void constructBoard();
 
 /* Draws the game state panel (turns, dices, instructions) */
 void log_drawing();
@@ -30,7 +30,7 @@ void draw_dice();
 void final_square();
 
 /* Board matrix */
-char Board[LINE][COLUMN];
+char BoardMatrix[LINE][COLUMN];
 
 /*  */
 extern void writeString(char (*matrix)[120], char *text, int line, int column);

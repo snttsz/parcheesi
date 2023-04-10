@@ -1,13 +1,13 @@
 CC = gcc
 CFLAGS = -Wall -Wextra -Isrc/game -Iutils -Isrc
 
-all: board_game
+all: Parcheesi
 
-board_game: main.o gameConstructor.o board.o gameLogic.o gameStruct.o string_util.o socket.o
-	$(CC) $(CFLAGS) -o board_game main.o gameConstructor.o board.o gameLogic.o gameStruct.o string_util.o socket.o
+Parcheesi: parcheesi.o game.o board.o gameLogic.o gameStruct.o string_util.o socket.o
+	$(CC) $(CFLAGS) -o Parcheesi parcheesi.o game.o board.o gameLogic.o gameStruct.o string_util.o socket.o
 
-gameConstructor.o: src/gameConstructor.c src/gameConstructor.h src/game/gameLogic.h
-	$(CC) $(CFLAGS) -c src/gameConstructor.c -o gameConstructor.o
+game.o: src/game.c src/game.h src/game/board.h src/game/gameStructure.h
+	$(CC) $(CFLAGS) -c src/game.c -o game.o
 
 board.o: src/game/board.c src/game/board.h utils/String_utils.h
 	$(CC) $(CFLAGS) -c src/game/board.c -o board.o
@@ -24,8 +24,8 @@ string_util.o: utils/String_utils.c utils/String_utils.h
 socket.o: src/comm/socket.c src/comm/socket.h
 	$(CC) $(CFLAGS) -c src/comm/socket.c -o socket.o
 
-main.o: main.c src/gameConstructor.h
-	$(CC) $(CFLAGS) -c main.c -o main.o
+parcheesi.o: Parcheesi.c src/game.h
+	$(CC) $(CFLAGS) -c Parcheesi.c -o parcheesi.o
 
 clean:
 	rm -f *.o board_game
