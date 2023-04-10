@@ -1,26 +1,26 @@
 #include "gameLogic.h"
 
-void walk(Player *player, int additional_squares, int column)
+void walk(char (*matrix)[MAX_COLUMNS], Player *player, int additional_squares, int column)
 {
 }
 
-void clean_dice()
+void clean_dice(char (*matrix)[MAX_COLUMNS])
 {
 }
 
-int roll_dice()
+int roll_dice(char (*matrix)[MAX_COLUMNS])
 {
     return 0;
 }
 
-void clean_actualSquare(Player *player, int column)
+void clean_actualSquare(char (*matrix)[MAX_COLUMNS], Player *player, int column)
 {
 }
 
-void check_square(int line, int column)
+void check_square(char (*matrix)[MAX_COLUMNS], int line, int column)
 {
 }
 
-void check_special_squares(int column, int final_column)
+void check_special_squares(char (*matrix)[MAX_COLUMNS], int column, int final_column)
 {
 }

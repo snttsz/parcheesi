@@ -10,6 +10,9 @@
 #define LINE 60
 #define COLUMN 120
 
+/* Board matrix */
+char BoardMatrix[LINE][COLUMN];
+
 /* Draws the complete board (like a constructor, call all functions bellow) */
 void constructBoard();
 
@@ -28,9 +31,6 @@ void draw_dice();
 
 /* Draws the endline points of each player's pieces */
 void final_square();
-
-/* Board matrix */
-char BoardMatrix[LINE][COLUMN];
 
 /*  */
 extern void writeString(char (*matrix)[120], char *text, int line, int column);

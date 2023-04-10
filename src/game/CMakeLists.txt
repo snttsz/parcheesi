@@ -8,3 +8,5 @@ target_link_libraries(gameLogic PUBLIC gameStruct)
 target_link_libraries(gameLogic PUBLIC board)
 
 target_include_directories(gameLogic PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+target_include_directories(board PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+

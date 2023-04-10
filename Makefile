@@ -6,13 +6,13 @@ all: Parcheesi
 Parcheesi: parcheesi.o game.o board.o gameLogic.o gameStruct.o string_util.o socket.o
 	$(CC) $(CFLAGS) -o Parcheesi parcheesi.o game.o board.o gameLogic.o gameStruct.o string_util.o socket.o
 
-game.o: src/game.c src/game.h src/game/board.h src/game/gameStructure.h
+game.o: src/game.c src/game.h src/game/gameLogic.h src/game/board.h
 	$(CC) $(CFLAGS) -c src/game.c -o game.o
 
 board.o: src/game/board.c src/game/board.h utils/String_utils.h
 	$(CC) $(CFLAGS) -c src/game/board.c -o board.o
 
-gameLogic.o: src/game/gameLogic.c src/game/gameLogic.h src/game/gameStructure.h src/game/board.h
+gameLogic.o: src/game/gameLogic.c src/game/gameLogic.h src/game/gameStructure.h
 	$(CC) $(CFLAGS) -c src/game/gameLogic.c -o gameLogic.o
 
 gameStruct.o: src/game/gameStructure.c src/game/gameStructure.h
