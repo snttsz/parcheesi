@@ -1,3 +1,5 @@
 build/
 tabuleiro.c
 .vscode/
+*.exe
+obj/

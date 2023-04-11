@@ -1,5 +1,10 @@
 #include "game.h"
 
+Player * playerRed;
+Player * playerYellow;
+Player * playerGreen;
+Player * playerBlue;
+
 void InitGame(Player(*PlayerRedRef), Player(*PlayerBlueRef), Player(*PlayerYellowRef), Player(*PlayerGreenRef))
 {
     playerRed = PlayerRedRef;

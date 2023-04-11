@@ -45,10 +45,10 @@ extern void check_special_squares(char (*matrix)[MAX_COLUMNS], int column, int f
 extern char BoardMatrix[LINE][COLUMN];
 
 /* Players objects */
-Player * playerRed;
-Player * playerYellow;
-Player * playerGreen;
-Player * playerBlue;
+extern Player * playerRed;
+extern Player * playerYellow;
+extern Player * playerGreen;
+extern Player * playerBlue;
 
 
 /* Utils */

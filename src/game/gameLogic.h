@@ -1,4 +1,3 @@
-/* The structures of the players and pieces */
 #ifndef GAME_LOGIC
 #define GAME_LOGIC
 

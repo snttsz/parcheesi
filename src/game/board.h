@@ -11,7 +11,7 @@
 #define COLUMN 120
 
 /* Board matrix */
-char BoardMatrix[LINE][COLUMN];
+extern char BoardMatrix[LINE][COLUMN];
 
 /* Draws the complete board (like a constructor, call all functions bellow) */
 void constructBoard();
@@ -33,6 +33,6 @@ void draw_dice();
 void final_square();
 
 /*  */
-extern void writeString(char (*matrix)[120], char *text, int line, int column);
+void writeString(char (*matrix)[120], char *text, int line, int column);
 
 #endif

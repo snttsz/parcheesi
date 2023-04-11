@@ -1,5 +1,7 @@
 #include "board.h"
 
+char BoardMatrix[LINE][COLUMN];
+
 void constructBoard()
 {
     horizontal_squares(LINE - 2, COLUMN - 2);

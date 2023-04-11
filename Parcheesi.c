@@ -2,16 +2,15 @@
 
 int main()
 {
-    Player* playerRed = malloc(sizeof(Player));
-    Player* playerYellow = malloc(sizeof(Player));
-    Player* playerGreen = malloc(sizeof(Player));
-    Player* playerBlue = malloc(sizeof(Player));
-    playerRed->name = "RED";
-    playerYellow->name = "YELLOW";
-    playerBlue->name = "BLUE";
-    playerGreen->name = "GREEN";
-    InitGame(playerRed, playerBlue, playerYellow, playerGreen);
-
+    Player* RedPlayer = malloc(sizeof(Player));
+    Player* YellowPlayer = malloc(sizeof(Player));
+    Player* GreenPlayer = malloc(sizeof(Player));
+    Player* BluePlayer = malloc(sizeof(Player));
+    RedPlayer->name = "RED";
+    YellowPlayer->name = "YELLOW";
+    BluePlayer->name = "BLUE";
+    GreenPlayer->name = "GREEN";
+    InitGame(RedPlayer, BluePlayer, YellowPlayer, GreenPlayer);
 
     for (int j = 0; j <= LINE - 2; j++)
     {
