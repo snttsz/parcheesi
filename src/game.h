@@ -4,14 +4,9 @@
 #include "gameLogic.h"
 #include "board.h"
 
-
 /* Init game functions */
 /* Will work like a constructor */
-void InitGame(Player(*PlayerRed),
-              Player(*PlayerBlue),
-              Player(*PlayerYellow),
-              Player(*PlayerGreen)
-             );
+void InitGame(Player (*players), int playersNumber);
 
 /* Will work like a constructor */
 /* void InitGameSocket(char *PlayerRedName,
@@ -25,30 +20,37 @@ void InitGame(Player(*PlayerRed),
 extern void constructBoard();
 
 /* Initialize all the players */
-void InitPlayers(); 
+void InitPlayers(Player (*players), int playersNumber); 
 
 /* Place all the players name inside the board */
-void PlacePlayersName();
+void PlacePlayersName(Player players[] , int playersNumber);
 
 
-/* Logic Functions */
+/* GameState functions */
+int getPlayerTurn();
+void resetPlayerTurn();
+void nextPlayerTurn();
+void runPlayerTurn(Player (*player));
+
+/* Intermediary Functions -> Clean, print and write functions */
+void writePlayerTurn(Player *(player));
+void clean_dice();
+void clean_actualSquare(Player * player, int column);
+void clean_gameStatePlayerMessages();
+void printMatrix();
+
+/* Logic Functions -> Declared at gameLogic.c */
 extern void walk(char (*matrix)[MAX_COLUMNS], Player * player, int additional_squares, int column);
-extern void clean_dice(char (*matrix)[MAX_COLUMNS]);
 extern int roll_dice(char (*matrix)[MAX_COLUMNS]);
-extern void clean_actualSquare(char (*matrix)[MAX_COLUMNS], Player * player, int column);
 extern void check_square(char (*matrix)[MAX_COLUMNS], int line, int column);
 extern void check_special_squares(char (*matrix)[MAX_COLUMNS], int column, int final_column);
+extern bool check_piece(Player (*player), int piece);
 
 
 /* Objects */
 /* The board Matrix */
 extern char BoardMatrix[LINE][COLUMN];
-
-/* Players objects */
-extern Player * playerRed;
-extern Player * playerYellow;
-extern Player * playerGreen;
-extern Player * playerBlue;
+static int playerTurn;
 
 
 /* Utils */
@@ -58,7 +60,7 @@ extern void writeString(char (*matrix)[120], char *text, int line, int column);
 
 /* =========== */
 /* THIS MUST BE REMOVED, IT'S JUST FOR DEBUG PURPOSES */
-void printPlayers(int piece);
+void printPlayers(Player players[], int playersNumber, int piece);
 /* =========== */
 
 

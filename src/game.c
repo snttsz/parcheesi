@@ -1,128 +1,169 @@
 #include "game.h"
 
-Player * playerRed;
-Player * playerYellow;
-Player * playerGreen;
-Player * playerBlue;
-
-void InitGame(Player(*PlayerRedRef), Player(*PlayerBlueRef), Player(*PlayerYellowRef), Player(*PlayerGreenRef))
+void InitGame(Player (*players), int playersNumber)
 {
-    playerRed = PlayerRedRef;
-    playerBlue = PlayerBlueRef;
-    playerYellow = PlayerYellowRef;
-    playerGreen = PlayerGreenRef;
-    
     constructBoard();
-    InitPlayers(); 
-    PlacePlayersName();
+    InitPlayers(players, playersNumber);
+    PlacePlayersName(players, playersNumber);
 
     return;
 }
 
-void InitPlayers()
+void InitPlayers(Player (*players), int playersNumber)
 {
-    playerRed->color = RED;
-    for (int i = 0; i <= 3; i++)
+    for (int j = 0; j <= playersNumber; j++)
     {
-        playerRed->pieces[i] = (Piece){
-            .number = i+1,
-            .square = {
-                .line = 3,
-                .column = 7 + (16 * i),
-                .squareLine = i + 1,
-                .squareNumber = 0}};
-    }
-
-    playerBlue->color = BLUE;
-    for (int i = 0; i <= 3; i++)
-    {
-        playerBlue->pieces[i] = (Piece){
-            .number = i+1,
-            .square = {
-                .line = 3,
-                .column = 7 + (16 * i),
-                .squareLine = i + 1,
-                .squareNumber = 0}};
-    }
-
-    playerYellow->color = YELLOW;
-    for (int i = 0; i <= 3; i++)
-    {
-        playerYellow->pieces[i] = (Piece){
-            .number = i+1,
-            .square = {
-                .line = 3,
-                .column = 7 + (16 * i),
-                .squareLine = i + 1,
-                .squareNumber = 0}};
-    }
-
-    playerGreen->color = GREEN;
-    for (int i = 0; i <= 3; i++)
-    {
-        playerGreen->pieces[i] = (Piece){
-            .number = i+1,
-            .square = {
-                .line = 3,
-                .column = 7 + (16 * i),
-                .squareLine = i + 1,
-                .squareNumber = 0}};
+        for (int i = 0; i<= 3; i++)
+        {
+            players[j].pieces[i] = (Piece)
+            {
+                .number = i+1,
+                .square = {
+                    .line = 3,
+                    .column = 7 + (16 * i),
+                    .squareLine = i + 1,
+                    .squareNumber = 0}};
+        }
     }
 
     return;
 }
 
-void PlacePlayersName()
+void writePlayerTurn(Player *(player))
 {
-    writeString(BoardMatrix, playerRed->name, 21, 91);
-    writeString(BoardMatrix, playerBlue->name, 23, 91);
-    writeString(BoardMatrix, playerYellow->name, 25, 91);
-    writeString(BoardMatrix, playerGreen->name, 27, 91);
+    writeString(BoardMatrix, player->name, 11, 103);
+    writeString(BoardMatrix, player->name, 29, 103);
+
+    writeString(BoardMatrix, "Press any key to roll the dice", 32, 84);
 
     return;
 }
 
-void printPlayers(int piece)
+void clean_dice()
 {
-    printf("PLAYER RED --> \n");
-    printf("PLAYER NAME: %s\n", playerRed->name);
-    printf("PLAYER COLOR: %d\n", playerRed->color);
-    printf("PLAYER PIECE NUMBER: %d\n", playerRed->pieces[piece].number);
-    printf("PLAYER PIECE COLUMN: %d\n", playerRed->pieces[piece].square.column);
-    printf("PLAYER PIECE LINE: %d\n",  playerRed->pieces[piece].square.line);
-    printf("PLAYER PIECE SQUARELINE: %d\n",  playerRed->pieces[piece].square.squareLine);
-    printf("PLAYER PIECE SQUARENUMBER: %d\n",  playerRed->pieces[piece].square.squareNumber);
-    printf("PLAYER RED <-- ");
 
-    printf("\n\nPLAYER BLUE -->\n");
-    printf("PLAYER NAME: %s\n", playerBlue->name);
-    printf("PLAYER COLOR: %d\n", playerBlue->color);
-    printf("PLAYER PIECE NUMBER: %d\n", playerBlue->pieces[piece].number);
-    printf("PLAYER PIECE COLUMN: %d\n", playerBlue->pieces[piece].square.column);
-    printf("PLAYER PIECE LINE: %d\n",  playerBlue->pieces[piece].square.line);
-    printf("PLAYER PIECE SQUARELINE: %d\n",  playerBlue->pieces[piece].square.squareLine);
-    printf("PLAYER PIECE SQUARENUMBER: %d\n",  playerBlue->pieces[piece].square.squareNumber);
-    printf("PLAYER BLUE <-- ");
+    for (int j = 6; j <= 8; j++)
+    {
+        for (int i = 97; i <= 101; i++)
+        {
+            BoardMatrix[j][i] = ' ';
+        }
+    }
 
-    printf("\n\nPLAYER YELLOW -->\n");
-    printf("PLAYER NAME: %s\n", playerYellow->name);
-    printf("PLAYER COLOR: %d\n", playerYellow->color);
-    printf("PLAYER PIECE NUMBER: %d\n", playerYellow->pieces[piece].number);
-    printf("PLAYER PIECE COLUMN: %d\n", playerYellow->pieces[piece].square.column);
-    printf("PLAYER PIECE LINE: %d\n",  playerYellow->pieces[piece].square.line);
-    printf("PLAYER PIECE SQUARELINE: %d\n",  playerYellow->pieces[piece].square.squareLine);
-    printf("PLAYER PIECE SQUARENUMBER: %d\n",  playerYellow->pieces[piece].square.squareNumber);
-    printf("PLAYER YELLOW <-- ");
+    return;
+}
 
-    printf("\n\nPLAYER GREEN -->\n");
-    printf("PLAYER NAME: %s\n", playerGreen->name);
-    printf("PLAYER COLOR: %d\n", playerGreen->color);
-    printf("PLAYER PIECE NUMBER: %d\n", playerGreen->pieces[piece].number);
-    printf("PLAYER PIECE COLUMN: %d\n", playerGreen->pieces[piece].square.column);
-    printf("PLAYER PIECE LINE: %d\n",  playerGreen->pieces[piece].square.line);
-    printf("PLAYER PIECE SQUARELINE: %d\n",  playerGreen->pieces[piece].square.squareLine);
-    printf("PLAYER PIECE SQUARENUMBER: %d\n",  playerGreen->pieces[piece].square.squareNumber);
-    printf("PLAYER GREEN <-- \n");
+void clean_actualSquare(Player *player, int column)
+{
+}
+
+void clean_gameStatePlayerMessages()
+{
+
+    for (int i = 103; i <= 113; i++)
+    {
+        BoardMatrix[11][i] = ' ';
+        BoardMatrix[29][i] = ' ';
+    }
+
+    for (int j = 31; j <= LINE - 3; j++)
+    {
+        for (int i = 81; i <= 117; i++)
+        {
+            BoardMatrix[j][i] = ' ';
+        }
+    }
+
+    return;
+}
+
+void printMatrix()
+{
+    for (int j = 0; j <= LINE - 2; j++)
+    {
+        for (int i = 0; i <= COLUMN - 2; i++)
+        {
+            printf("%c", BoardMatrix[j][i]);
+        }
+        printf("\n");
+    }
+
+    return;
+}
+
+void PlacePlayersName(Player players[], int playersNumber)
+{
+    writeString(BoardMatrix, players[0].name, 21, 91);
+    writeString(BoardMatrix, players[1].name, 23, 91);
+    writeString(BoardMatrix, players[2].name, 25, 91);
+    writeString(BoardMatrix, players[3].name, 27, 91);
+
+    writeString(BoardMatrix, players[0].name, 48, 13);
+    writeString(BoardMatrix, players[1].name, 48, 25);
+    writeString(BoardMatrix, players[2].name, 48, 37);
+    writeString(BoardMatrix, players[3].name, 48, 49);
+
+    return;
+}
+
+int getPlayerTurn()
+{
+    return playerTurn;
+}
+
+void resetPlayerTurn()
+{
+    playerTurn = 0;
+
+    return;
+}
+
+void nextPlayerTurn()
+{
+    if (playerTurn <= 3)
+    {
+        playerTurn++;
+    }
+
+    return;
+}
+
+void runPlayerTurn(Player (*player))
+{
+    int dice_result;
+    char piece_message[43];
+
+    clean_dice();
+    clean_gameStatePlayerMessages();
+    
+    writePlayerTurn(player);
+    system("clear");
+    printMatrix();
+    getchar();
+    dice_result = roll_dice(BoardMatrix);
+    sprintf(piece_message, "Which piece you want to move %d", dice_result);
+    writeString(BoardMatrix, piece_message, 32, 84);
+    writeString(BoardMatrix, "square(s)?", 34, 94);
+
+    system("clear");
+    printMatrix();
+
+    return;
+}
+
+void printPlayers(Player players[], int playersNumber, int piece)
+{
+    for (int i = 0; i<= playersNumber; i++)
+    {
+        printf("PLAYER %d --> \n", i);
+        printf("PLAYER NAME: %s\n", players[i].name);
+        printf("PLAYER PIECE NUMBER: %d\n", players[i].pieces[piece].number);
+        printf("PLAYER PIECE COLUMN: %d\n", players[i].pieces[piece].square.column);
+        printf("PLAYER PIECE LINE: %d\n",  players[i].pieces[piece].square.line);
+        printf("PLAYER PIECE SQUARELINE: %d\n",  players[i].pieces[piece].square.squareLine);
+        printf("PLAYER PIECE SQUARENUMBER: %d\n",  players[i].pieces[piece].square.squareNumber);
+        printf("PLAYER END <-- \n");
+    }
 
     return;
 }

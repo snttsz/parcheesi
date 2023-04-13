@@ -5,7 +5,7 @@
 
 #define MAX_COLUMNS 120
 
-void writeString(char (*matrix)[MAX_COLUMNS], char *text, int line, int column);
+void writeString(char (*matrix)[MAX_COLUMNS], char text[], int line, int column);
 
 
 #endif

@@ -1,6 +1,6 @@
 #include "String_utils.h"
 
-void writeString(char (*matrix)[MAX_COLUMNS], char *text, int line, int column)
+void writeString(char (*matrix)[MAX_COLUMNS], char text[], int line, int column)
 {
     int i, j, size;
 

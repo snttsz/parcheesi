@@ -25,13 +25,13 @@ void log_drawing()
 
     writeString(BoardMatrix, "GAMESTATE PANEL", 18, 92);
     writeString(BoardMatrix, "PLAYER ", 21, 82);
-    writeString(BoardMatrix, "RED", 21, 110);
+    writeString(BoardMatrix, "R1, R2, R3, R4", 21, 100);
     writeString(BoardMatrix, "PLAYER ", 23, 82);
-    writeString(BoardMatrix, "BLUE", 23, 110);
+    writeString(BoardMatrix, "B1, B2, B3, B4", 23, 100);
     writeString(BoardMatrix, "PLAYER ", 25, 82);
-    writeString(BoardMatrix, "GREEN", 25, 110);
+    writeString(BoardMatrix, "G1, G2, G3, G4", 25, 100);
     writeString(BoardMatrix, "PLAYER ", 27, 82);
-    writeString(BoardMatrix, "YELLOW", 27, 110);
+    writeString(BoardMatrix, "Y1, Y2, Y3, Y4", 27, 100);
     writeString(BoardMatrix, "PLAYER'S TURN ", 11, 88);
     writeString(BoardMatrix, "PLAYER'S TURN ", 29, 88);
 
@@ -178,9 +178,4 @@ void final_square()
         writeString(BoardMatrix, "__", j, 38);
         writeString(BoardMatrix, "__", j, 50);
     }
-
-    writeString(BoardMatrix, "RED", 48, 15);
-    writeString(BoardMatrix, "BLUE", 48, 27);
-    writeString(BoardMatrix, "GREEN", 48, 38);
-    writeString(BoardMatrix, "YELLOW", 48, 50);
 }

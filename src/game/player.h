@@ -1,15 +1,7 @@
-#ifndef GAME_STRUCTURE
-#define GAME_STRUCTURE
+#ifndef PLAYER_STRUCTURE
+#define PLAYER_STRUCTURE
 
 #include <stdio.h>
-
-enum Color
-{
-    RED,
-    BLUE,
-    GREEN,
-    YELLOW
-};
 
 typedef struct
 {
@@ -30,9 +22,8 @@ typedef struct
 typedef struct
 {
     Piece pieces[4];
-    enum Color color;
     char * name;
-
+    
 } Player;
 
 

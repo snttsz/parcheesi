@@ -1,24 +1,32 @@
 #include "game.h"
 
+
 int main()
 {
-    Player* RedPlayer = malloc(sizeof(Player));
-    Player* YellowPlayer = malloc(sizeof(Player));
-    Player* GreenPlayer = malloc(sizeof(Player));
-    Player* BluePlayer = malloc(sizeof(Player));
-    RedPlayer->name = "RED";
-    YellowPlayer->name = "YELLOW";
-    BluePlayer->name = "BLUE";
-    GreenPlayer->name = "GREEN";
-    InitGame(RedPlayer, BluePlayer, YellowPlayer, GreenPlayer);
+    /* THIS SHOULD NOT BE HERE -> THIS SOULD BE MOVED TO THE MENU DISPLAY */
+    int players_size = 3;
+    int max_length = (players_size+1) * 10 + 1;
+    char playersName[max_length];
+    Player players[players_size+1];
 
-    for (int j = 0; j <= LINE - 2; j++)
+    for (int i = 0; i <= players_size; i++)
     {
-        for (int i = 0; i <= COLUMN - 2; i++)
-        {
-            printf("%c", BoardMatrix[j][i]);
-        }
-        printf("\n");
+        printf("Nome do jogador %d: ", i);
+        scanf("%9[^\n]", &playersName[i*10]);
+        int c;
+        while ((c = getchar()) != '\n' && c != EOF) {}
+        players[i].name = &playersName[i*10];
+    }
+    /* ^ THIS SHOULD NOT BE HERE  ^ */
+
+
+    InitGame(players, players_size);    
+
+    for (int i = 0; i<= players_size; i++)
+    {
+        runPlayerTurn(&players[getPlayerTurn()]);
+        getchar();
+        nextPlayerTurn();
     }
 
     return 0;
