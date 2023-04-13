@@ -4,11 +4,11 @@ char BoardMatrix[LINE][COLUMN];
 
 void constructBoard()
 {
-    horizontal_squares(LINE - 2, COLUMN - 2);
-    vertical_squares(4, 9);
-    vertical_squares(4, 25);
-    vertical_squares(4, 41);
-    vertical_squares(4, 57);
+    board_lines(LINE - 2, COLUMN - 2);
+    squares(4, 9);
+    squares(4, 25);
+    squares(4, 41);
+    squares(4, 57);
     final_square();
     writeString(BoardMatrix, "R1 B1 G1 Y1", 3, 7);
     writeString(BoardMatrix, "R2 B2 G2 Y2", 3, 23);
@@ -86,7 +86,7 @@ void specialSquares_drawing()
     }
 }
 
-void horizontal_squares(int line, int column)
+void board_lines(int line, int column)
 {
     int j, i;
 
@@ -114,7 +114,7 @@ void horizontal_squares(int line, int column)
     }
 }
 
-void vertical_squares(int line, int column)
+void squares(int line, int column)
 {
 
     for (int j = line; j <= line + 40; j = j + 3)

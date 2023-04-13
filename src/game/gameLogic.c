@@ -62,12 +62,3 @@ void check_special_squares(char (*matrix)[MAX_COLUMNS], int column, int final_co
     return;
 }
 
-bool check_piece(Player (*player), int piece)
-{
-    if (player->pieces[piece].square.squareNumber <= 15)
-    {
-        return true;
-    }
-
-    return false;
-}

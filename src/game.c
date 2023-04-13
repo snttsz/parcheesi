@@ -1,7 +1,19 @@
 #include "game.h"
 
-void InitGame(Player (*players), int playersNumber)
+void set_OS(void)
 {
+    #ifdef _WIN32
+        command = "cls";
+    #elif defined(__APPLE__)
+        command = "clear";
+    #elif defined(__linux__)
+        command = "clear";
+    #endif
+}
+
+void InitGame(Player(*players), int playersNumber)
+{
+    set_OS();
     constructBoard();
     InitPlayers(players, playersNumber);
     PlacePlayersName(players, playersNumber);
@@ -29,50 +41,17 @@ void InitPlayers(Player (*players), int playersNumber)
     return;
 }
 
-void writePlayerTurn(Player *(player))
+void PlacePlayersName(Player players[], int playersNumber)
 {
-    writeString(BoardMatrix, player->name, 11, 103);
-    writeString(BoardMatrix, player->name, 29, 103);
+    writeString(BoardMatrix, players[0].name, 21, 91);
+    writeString(BoardMatrix, players[1].name, 23, 91);
+    writeString(BoardMatrix, players[2].name, 25, 91);
+    writeString(BoardMatrix, players[3].name, 27, 91);
 
-    writeString(BoardMatrix, "Press any key to roll the dice", 32, 84);
-
-    return;
-}
-
-void clean_dice()
-{
-
-    for (int j = 6; j <= 8; j++)
-    {
-        for (int i = 97; i <= 101; i++)
-        {
-            BoardMatrix[j][i] = ' ';
-        }
-    }
-
-    return;
-}
-
-void clean_actualSquare(Player *player, int column)
-{
-}
-
-void clean_gameStatePlayerMessages()
-{
-
-    for (int i = 103; i <= 113; i++)
-    {
-        BoardMatrix[11][i] = ' ';
-        BoardMatrix[29][i] = ' ';
-    }
-
-    for (int j = 31; j <= LINE - 3; j++)
-    {
-        for (int i = 81; i <= 117; i++)
-        {
-            BoardMatrix[j][i] = ' ';
-        }
-    }
+    writeString(BoardMatrix, players[0].name, 48, 13);
+    writeString(BoardMatrix, players[1].name, 48, 25);
+    writeString(BoardMatrix, players[2].name, 48, 37);
+    writeString(BoardMatrix, players[3].name, 48, 49);
 
     return;
 }
@@ -91,65 +70,120 @@ void printMatrix()
     return;
 }
 
-void PlacePlayersName(Player players[], int playersNumber)
+
+int selectPiece(char(*buffer), Player(*player))
 {
-    writeString(BoardMatrix, players[0].name, 21, 91);
-    writeString(BoardMatrix, players[1].name, 23, 91);
-    writeString(BoardMatrix, players[2].name, 25, 91);
-    writeString(BoardMatrix, players[3].name, 27, 91);
-
-    writeString(BoardMatrix, players[0].name, 48, 13);
-    writeString(BoardMatrix, players[1].name, 48, 25);
-    writeString(BoardMatrix, players[2].name, 48, 37);
-    writeString(BoardMatrix, players[3].name, 48, 49);
-
-    return;
-}
-
-int getPlayerTurn()
-{
-    return playerTurn;
-}
-
-void resetPlayerTurn()
-{
-    playerTurn = 0;
-
-    return;
-}
-
-void nextPlayerTurn()
-{
-    if (playerTurn <= 3)
+    /* The piece choosen by the user to move x squares */
+    int choosen_piece;
+    while(1)
     {
-        playerTurn++;
+        for (int i = 1; i <= 4; i++)
+        {
+            /* 
+            Messages about which piece the player wants to move x squares 
+            It is at first checked if the piece number i is available (if the piece is not out of the game yet)
+            */
+            if (check_piece(player, i-1))
+            {
+                sprintf(buffer, "Press %d to move piece %c%d", i, player->PieceLetter, i);
+                writeString(BoardMatrix, buffer, 36+i, 87);
+            }
+        }
+        /* Clenas the terminal and print the updated board */
+        system(command);
+        printMatrix();
+        
+        /* Asks for the user answer */
+        printf("\t\t\t\t\t\t\t\t\t\t\t    Answer: ");
+        scanf("%d", &choosen_piece);
+
+        /* 
+        If the user selects an invalid piece, then it shows a message accusing the mistake
+        and waits for the user to input a valid piece
+        */
+        if (!check_piece(player, choosen_piece-1))
+        {
+            writeString(BoardMatrix, "You can't move this piece!", 45, 85);
+            system(command);
+            printMatrix();
+
+            continue;
+        }
+
+        break;
     }
 
-    return;
+    /* Cleans the line where the invalid piece message could be */
+    writeString(BoardMatrix, "                          ", 45, 85);
+    /* Minus 1 because the piece's index starts with 0 */
+    return choosen_piece-1;
 }
 
 void runPlayerTurn(Player (*player))
 {
+    /* Will keep the result of the dice */
     int dice_result;
-    char piece_message[43];
+    /* Will keep the messages that should be printed inside the GameState Panel */
+    char buffer[43];
 
-    clean_dice();
-    clean_gameStatePlayerMessages();
-    
-    writePlayerTurn(player);
-    system("clear");
+    /* Will clean the dice, in case it had already been rolled and there's a past number drawed */
+    clean_dice(BoardMatrix);
+    /* Will clean the messages of the last player's turn of the gamestate panel */
+    clean_gameStatePlayerMessages(BoardMatrix);
+    /* Will write the player's name inside the board where it's needed */
+    writePlayerTurn(BoardMatrix, player);
+
+    /* Clears the terminal */
+    system(command);
+    /* Prints the Board with the updated informations and ask to the player to press any key to roll the dice */
     printMatrix();
     getchar();
+
+    /* Rolls the dice and store the result inside a variable */
     dice_result = roll_dice(BoardMatrix);
-    sprintf(piece_message, "Which piece you want to move %d", dice_result);
-    writeString(BoardMatrix, piece_message, 32, 84);
+
+    /* Copies a default message with the value of the dice */
+    sprintf(buffer, "Which piece you want to move %d", dice_result);
+    /* Writes inside the board */
+    writeString(BoardMatrix, buffer, 32, 84);
     writeString(BoardMatrix, "square(s)?", 34, 94);
 
-    system("clear");
-    printMatrix();
+    /* Cleans the buffer to store a new message */
+    memset(buffer, 0, sizeof(buffer));
+    
+    /* Increment the squareNumber at the player's structure with the value of the dice */
+    player->pieces[selectPiece(buffer, player)].square.squareNumber += dice_result;
 
     return;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 void printPlayers(Player players[], int playersNumber, int piece)
 {

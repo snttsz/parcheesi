@@ -3,8 +3,17 @@
 
 #include "gameLogic.h"
 #include "board.h"
+#include "gameState.h"
 
-/* Init game functions */
+/* The board Matrix */
+extern char BoardMatrix[LINE][COLUMN];
+
+/* Command for cleaning the terminal */
+static const char * command;
+
+/* Sets the OS of the player to adapt system commands and socket */
+void set_OS(void);
+
 /* Will work like a constructor */
 void InitGame(Player (*players), int playersNumber);
 
@@ -16,46 +25,59 @@ void InitGame(Player (*players), int playersNumber);
                     char *host,
                     unsigned int port); */
 
-/* The board constructor -> draws the board */
-extern void constructBoard();
-
 /* Initialize all the players */
 void InitPlayers(Player (*players), int playersNumber); 
 
 /* Place all the players name inside the board */
 void PlacePlayersName(Player players[] , int playersNumber);
 
-
-/* GameState functions */
-int getPlayerTurn();
-void resetPlayerTurn();
-void nextPlayerTurn();
-void runPlayerTurn(Player (*player));
-
-/* Intermediary Functions -> Clean, print and write functions */
-void writePlayerTurn(Player *(player));
-void clean_dice();
-void clean_actualSquare(Player * player, int column);
-void clean_gameStatePlayerMessages();
+/* Prints the board */
 void printMatrix();
 
-/* Logic Functions -> Declared at gameLogic.c */
-extern void walk(char (*matrix)[MAX_COLUMNS], Player * player, int additional_squares, int column);
-extern int roll_dice(char (*matrix)[MAX_COLUMNS]);
-extern void check_square(char (*matrix)[MAX_COLUMNS], int line, int column);
-extern void check_special_squares(char (*matrix)[MAX_COLUMNS], int column, int final_column);
+/* Construct and runs all the steps of the player's turn */
+void runPlayerTurn(Player (*player));
+
+/* Handles with the piece choosing during the player's turn */
+int selectPiece(char (*buffer), Player (*player));
+
+
+
+/* EXTERN FUNCTIONS */
+
+/* The board constructor -> draws the board (Declared at board.h) */
+extern void constructBoard();
+
+/* GameState functions -> Declared at gameState.c */
+extern int getPlayerTurn();
+extern void resetPlayerTurn();
+extern void nextPlayerTurn();
+extern void writePlayerTurn(char (*BoardMatrix)[MAX_COLUMNS], Player *(player));
+extern void clean_dice(char (*BoardMatrix)[MAX_COLUMNS]);
+extern void clean_actualSquare(char (*BoardMatrix)[MAX_COLUMNS], Player * player, int column);
+extern void clean_gameStatePlayerMessages(char (*BoardMatrix)[MAX_COLUMNS]);
 extern bool check_piece(Player (*player), int piece);
 
 
-/* Objects */
-/* The board Matrix */
-extern char BoardMatrix[LINE][COLUMN];
-static int playerTurn;
+/* Logic Functions -> Declared at gameLogic.c */
+extern void walk(char (*matrix)[MAX_COLUMNS], Player (*player), int additional_squares, int column);
+extern int roll_dice(char (*matrix)[MAX_COLUMNS]);
+extern void check_square(char (*matrix)[MAX_COLUMNS], int line, int column);
+extern void check_special_squares(char (*matrix)[MAX_COLUMNS], int column, int final_column);
 
 
-/* Utils */
+/* Utils -> Declared at String_Utils.c */
 /* write inside the Board */
-extern void writeString(char (*matrix)[120], char *text, int line, int column);
+extern void writeString(char (*matrix)[MAX_COLUMNS], char text[], int line, int column);
+
+
+
+
+
+
+
+
+
+
 
 
 /* =========== */

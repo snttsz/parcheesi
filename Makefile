@@ -15,10 +15,10 @@ OBJDIR = obj
 
 all: Parcheesi
 
-Parcheesi: $(OBJDIR)/parcheesi.$(OBJEXT) $(OBJDIR)/game.$(OBJEXT) $(OBJDIR)/board.$(OBJEXT) $(OBJDIR)/gameLogic.$(OBJEXT) $(OBJDIR)/player.$(OBJEXT) $(OBJDIR)/string_util.$(OBJEXT) $(OBJDIR)/socket.$(OBJEXT)
-	$(CC) $(CFLAGS) -o Parcheesi $(OBJDIR)/parcheesi.$(OBJEXT) $(OBJDIR)/game.$(OBJEXT) $(OBJDIR)/board.$(OBJEXT) $(OBJDIR)/gameLogic.$(OBJEXT) $(OBJDIR)/player.$(OBJEXT) $(OBJDIR)/string_util.$(OBJEXT) $(OBJDIR)/socket.$(OBJEXT)
+Parcheesi: $(OBJDIR)/parcheesi.$(OBJEXT) $(OBJDIR)/game.$(OBJEXT) $(OBJDIR)/board.$(OBJEXT) $(OBJDIR)/gameLogic.$(OBJEXT) $(OBJDIR)/player.$(OBJEXT) $(OBJDIR)/gameState.$(OBJEXT) $(OBJDIR)/string_util.$(OBJEXT) $(OBJDIR)/socket.$(OBJEXT)
+	$(CC) $(CFLAGS) -o Parcheesi $(OBJDIR)/parcheesi.$(OBJEXT) $(OBJDIR)/game.$(OBJEXT) $(OBJDIR)/board.$(OBJEXT) $(OBJDIR)/gameLogic.$(OBJEXT) $(OBJDIR)/player.$(OBJEXT) $(OBJDIR)/gameState.$(OBJEXT) $(OBJDIR)/string_util.$(OBJEXT) $(OBJDIR)/socket.$(OBJEXT)
 
-$(OBJDIR)/game.$(OBJEXT): src/game.c src/game.h src/game/gameLogic.h src/game/board.h | $(OBJDIR)
+$(OBJDIR)/game.$(OBJEXT): src/game.c src/game.h src/game/gameLogic.h src/game/board.h src/game/gameState.h | $(OBJDIR)
 	$(CC) $(CFLAGS) -c src/game.c -o $(OBJDIR)/game.$(OBJEXT)
 
 $(OBJDIR)/board.$(OBJEXT): src/game/board.c src/game/board.h utils/String_utils.h | $(OBJDIR)
@@ -29,6 +29,9 @@ $(OBJDIR)/gameLogic.$(OBJEXT): src/game/gameLogic.c src/game/gameLogic.h src/gam
 
 $(OBJDIR)/player.$(OBJEXT): src/game/player.c src/game/player.h | $(OBJDIR)
 	$(CC) $(CFLAGS) -c src/game/player.c -o $(OBJDIR)/player.$(OBJEXT)
+
+$(OBJDIR)/gameState.$(OBJEXT): src/game/gameState.c src/game/gameState.h utils/String_utils.h src/game/player.h | $(OBJDIR)
+	$(CC) $(CFLAGS) -c src/game/gameState.c -o $(OBJDIR)/gameState.$(OBJEXT)
 
 $(OBJDIR)/string_util.$(OBJEXT): utils/String_utils.c utils/String_utils.h | $(OBJDIR)
 	$(CC) $(CFLAGS) -c utils/String_utils.c -o $(OBJDIR)/string_util.$(OBJEXT)

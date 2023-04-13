@@ -17,15 +17,21 @@ int main()
         while ((c = getchar()) != '\n' && c != EOF) {}
         players[i].name = &playersName[i*10];
     }
+    players[0].PieceLetter = 'R';
+    players[1].PieceLetter = 'B';    
+    players[2].PieceLetter = 'G';
+    players[3].PieceLetter = 'Y';
+    
     /* ^ THIS SHOULD NOT BE HERE  ^ */
 
 
     InitGame(players, players_size);    
 
-    for (int i = 0; i<= players_size; i++)
+    while(1)
     {
         runPlayerTurn(&players[getPlayerTurn()]);
         getchar();
+        system(command);
         nextPlayerTurn();
     }
 

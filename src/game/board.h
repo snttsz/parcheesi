@@ -20,11 +20,12 @@ void constructBoard();
 void log_drawing();
 
 /* Draws the markers of the squares that the player can't be affected */
+/* Maybe this should be moved to the gameState file */
 void specialSquares_drawing();
 
 /* Draws horizontal and vertical lines */
-void horizontal_squares(int line, int column);
-void vertical_squares(int line, int column);
+void board_lines(int line, int column);
+void squares(int line, int column);
 
 /* Draws the dice of the game */
 void draw_dice();
@@ -33,6 +34,6 @@ void draw_dice();
 void final_square();
 
 /*  */
-void writeString(char (*matrix)[120], char *text, int line, int column);
+extern void writeString(char (*matrix)[MAX_COLUMNS], char text[], int line, int column);
 
 #endif
