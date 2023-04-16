@@ -108,6 +108,36 @@ int getLine(int squareNumber)
     return (3 * squareNumber -1) + 3;;
 }
 
+bool checkPlayer(Player player)
+{
+    int counter = 0;
+
+    for(int i = 0; i <= 3; i++)
+    {
+        if(!check_piece(&player, i))
+        {
+            counter++;
+        }
+    }
+
+    return false ? counter == 4 : true;
+}
+
+bool checkPlayers(Player players[], int numPlayers)
+{
+    int counter = 0;
+
+    for(int i = 0; i <= numPlayers; i++)
+    {
+        if(!checkPlayer(players[i]))
+        {
+            counter++;
+        }
+    }
+
+    return false ? counter == 4 : true;
+}
+
 bool check_piece(Player (*player), int piece)
 {
     if (player->pieces[piece].square.squareNumber <= 15)

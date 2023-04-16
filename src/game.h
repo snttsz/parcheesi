@@ -38,7 +38,7 @@ void printMatrix();
 void runPlayerTurn(Player (*player));
 
 /* Handles with the piece choosing during the player's turn */
-int selectPiece(char (*buffer), Player (*player));
+int selectPiece(char (*buffer), Player (*player), int diceResult);
 
 /*  */
 void updatePlayer(Player (*players));
@@ -68,7 +68,7 @@ extern bool check_piece(Player (*player), int piece);
 extern void walk(char (*matrix)[MAX_COLUMNS], Player (*player), int piece, int additional_squares, int column);
 extern int roll_dice(char (*matrix)[MAX_COLUMNS]);
 extern char * check_square(char (*matrix)[MAX_COLUMNS], int squareNumber, int column);
-extern void check_special_squares(char (*matrix)[MAX_COLUMNS], int column, int final_column);
+extern bool check_special_squares(char matrix[][MAX_COLUMNS], int actualSquare, int diceResult, int column);
 
 
 /* Utils -> Declared at String_Utils.c */

@@ -73,7 +73,7 @@ void printMatrix()
 }
 
 
-int selectPiece(char(*buffer), Player(*player))
+int selectPiece(char(*buffer), Player(*player), int diceResult)
 {
     /* The piece choosen by the user to move x squares */
     int choosen_piece;
@@ -103,7 +103,7 @@ int selectPiece(char(*buffer), Player(*player))
         If the user selects an invalid piece, then it shows a message accusing the mistake
         and waits for the user to input a valid piece
         */
-        if (!check_piece(player, choosen_piece-1))
+        if (!check_piece(player, choosen_piece-1) || check_special_squares(BoardMatrix, player->pieces[choosen_piece-1].square.squareNumber, diceResult, player->pieces[choosen_piece-1].square.initcolumn))
         {
             writeString(BoardMatrix, "You can't move this piece!", 45, 85);
             system(command);
@@ -195,7 +195,7 @@ void runPlayerTurn(Player (*player))
     memset(buffer, 0, sizeof(buffer));
     
     /* Calls the function to let the player select the piece (the function returns the piece which the player choosed) */
-    int choosen_piece = selectPiece(buffer, player)-1;
+    int choosen_piece = selectPiece(buffer, player, dice_result)-1;
 
     /* Cleans the square which the player actually is */
     clean_actualSquare(BoardMatrix, &player->pieces[choosen_piece], player->PieceLetter);
@@ -213,6 +213,7 @@ void runPlayerTurn(Player (*player))
     /* Increment the squareNumber at the player's structure with the value of the dice */
     player->pieces[choosen_piece].square.squareNumber += dice_result;
 
+    /* free the pointer where playerDead's allocated */
     free(playerDead);
 
     return;

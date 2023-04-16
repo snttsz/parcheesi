@@ -83,8 +83,17 @@ char * check_square(char (*matrix)[MAX_COLUMNS], int squareNumber, int column)
     return playerInfo;
 }
 
-void check_special_squares(char (*matrix)[MAX_COLUMNS], int column, int final_column)
+bool check_special_squares(char matrix[][MAX_COLUMNS], int actualSquare, int diceResult, int column)
 {
-    return;
+    int final_square = actualSquare + diceResult;
+    int line = getLine(final_square);
+
+    if ((final_square == 1 || final_square == 7 || final_square == 14) && (matrix[line][column] != '*'))
+    {
+        return true;
+    }
+    
+
+    return false;
 }
 

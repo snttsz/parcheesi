@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <time.h>
 #include <stdlib.h>
+#include <stdbool.h>
 #include "gameState.h"
 #include "gameLogic.h"
 
@@ -20,7 +21,7 @@ int roll_dice(char (*matrix)[MAX_COLUMNS]);
 char * check_square(char (*matrix)[MAX_COLUMNS], int squareNumber, int column);
 
 /* TODO review this function */
-void check_special_squares(char (*matrix)[MAX_COLUMNS], int column, int final_column);
+bool check_special_squares(char matrix[][MAX_COLUMNS], int actualSquare, int diceResult, int column);
 
 extern void writeString(char (*matrix)[MAX_COLUMNS], char text[], int line, int column);
 
