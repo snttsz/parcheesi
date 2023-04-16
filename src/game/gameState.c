@@ -51,8 +51,29 @@ void clean_dice(char (*BoardMatrix)[MAX_COLUMNS])
     return;
 }
 
-void clean_actualSquare(char (*BoardMatrix)[MAX_COLUMNS], Player *player, int column)
+void clean_actualSquare(char (*BoardMatrix)[MAX_COLUMNS], Piece (*piece), char playerLetter)
 {
+    int squareNumber = piece->square.squareNumber;
+    int initcolumn = piece->square.initcolumn;
+    int init0column = piece->square.init0column;
+    int line = getLine(squareNumber);
+
+    /* Cleans the init square of the player */
+    BoardMatrix[3][init0column] = ' ';
+    BoardMatrix[3][init0column+1] = ' ';
+
+    if (squareNumber != 1 && squareNumber != 7 && squareNumber != 14)
+    {
+        BoardMatrix[line][initcolumn] = ' ';
+        BoardMatrix[line][initcolumn+1] = ' ';
+    }
+    else
+    {
+        BoardMatrix[line][initcolumn] = '*';
+        BoardMatrix[line][initcolumn+1] = '*';
+    }
+
+    return;   
 }
 
 void clean_gameStatePlayerMessages(char (*BoardMatrix)[MAX_COLUMNS])
@@ -73,6 +94,18 @@ void clean_gameStatePlayerMessages(char (*BoardMatrix)[MAX_COLUMNS])
     }
 
     return;
+}
+
+void reDraw_specialSquares(char (*BoardMatrix)[MAX_COLUMNS], int squareNumber, int column)
+{
+
+
+    return;
+}
+
+int getLine(int squareNumber)
+{
+    return (3 * squareNumber -1) + 3;;
 }
 
 bool check_piece(Player (*player), int piece)

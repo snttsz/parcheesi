@@ -20,7 +20,6 @@ void constructBoard();
 void log_drawing();
 
 /* Draws the markers of the squares that the player can't be affected */
-/* Maybe this should be moved to the gameState file */
 void specialSquares_drawing();
 
 /* Draws horizontal and vertical lines */

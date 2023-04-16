@@ -30,9 +30,13 @@ int main()
     while(1)
     {
         runPlayerTurn(&players[getPlayerTurn()]);
+        printf("Went to the end of runPlayer\n");
+        getchar();
+        updatePlayer(players);
         getchar();
         system(command);
         nextPlayerTurn();
+        
     }
 
     return 0;

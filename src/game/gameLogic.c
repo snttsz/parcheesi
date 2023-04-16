@@ -1,7 +1,14 @@
 #include "gameLogic.h"
 
-void walk(char (*matrix)[MAX_COLUMNS], Player (*player), int additional_squares, int column)
+void walk(char (*matrix)[MAX_COLUMNS], Player (*player), int piece, int additional_squares, int column)
 {
+    int final_square = player->pieces[piece].square.squareNumber + additional_squares;
+    int result = getLine(final_square);
+    int pieceM = piece+1;
+
+    matrix[result][column] = player->PieceLetter;
+    matrix[result][column+1] = (char) (pieceM)+'0';
+
     return;
 }
 
@@ -52,9 +59,28 @@ int roll_dice(char (*matrix)[MAX_COLUMNS])
     return n_random;
 }
 
-void check_square(char (*matrix)[MAX_COLUMNS], int line, int column)
+char * check_square(char (*matrix)[MAX_COLUMNS], int squareNumber, int column)
 {
-    return;
+    int line = getLine(squareNumber);
+    char playerLetter = ' ';
+    char playerNumber = ' ';
+    char* playerInfo = malloc(3 * sizeof(char));
+
+    if (matrix[line][column] != ' ')
+    {
+        playerLetter = matrix[line][column];
+        playerNumber = matrix[line][column+1];
+        matrix[line][column] = ' ';
+        matrix[line][column+1] = ' ';
+        sprintf(playerInfo, "%c%c", playerLetter, playerNumber);
+    }
+    else
+    {
+        sprintf(playerInfo, "%s", "");
+    }
+
+
+    return playerInfo;
 }
 
 void check_special_squares(char (*matrix)[MAX_COLUMNS], int column, int final_column)

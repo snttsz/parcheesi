@@ -5,8 +5,9 @@
 
 typedef struct
 {
-    int column;
-    int line;
+    int initcolumn;
+    int initline;
+    int init0column;
     int squareNumber;
     int squareLine;
     

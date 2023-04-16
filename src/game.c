@@ -1,5 +1,6 @@
 #include "game.h"
 
+/* TODO review this because maybe it's not working */
 void set_OS(void)
 {
     #ifdef _WIN32
@@ -31,8 +32,9 @@ void InitPlayers(Player (*players), int playersNumber)
             {
                 .number = i+1,
                 .square = {
-                    .line = 3,
-                    .column = 7 + (16 * i),
+                    .initline = 3,
+                    .initcolumn = 11 + (16 * i),
+                    .init0column = (7 + (16 * i)) + 3 * j,
                     .squareLine = i + 1,
                     .squareNumber = 0}};
         }
@@ -115,8 +117,49 @@ int selectPiece(char(*buffer), Player(*player))
 
     /* Cleans the line where the invalid piece message could be */
     writeString(BoardMatrix, "                          ", 45, 85);
-    /* Minus 1 because the piece's index starts with 0 */
-    return choosen_piece-1;
+    return choosen_piece;
+}
+
+void updatePlayer(Player(*players))
+{
+    int player = getPlayer();
+    if (player == -1)
+    {
+        return;
+    }
+
+    Player playerSelected = players[player];
+    int pieceNumber = atoi(&playerInsideSquare[1]) -1;
+
+    playerSelected.pieces[pieceNumber].square.squareNumber = 0;
+    BoardMatrix[3][playerSelected.pieces[pieceNumber].square.init0column] = playerSelected.PieceLetter;
+    BoardMatrix[3][playerSelected.pieces[pieceNumber].square.init0column+1] = playerInsideSquare[1];
+
+    return;
+}
+
+int getPlayer()
+{
+    int result = -1;
+    char PlayerLetter = playerInsideSquare[0];
+
+    if (PlayerLetter == 'R')
+    {
+        result = 0;
+    }
+    else if (PlayerLetter == 'B')
+    {
+        result = 1;
+    }
+    else if (PlayerLetter == 'G')
+    {
+        result = 2;
+    }
+    else if (PlayerLetter == 'Y')
+    {
+        result = 3;
+    }
+    return result;
 }
 
 void runPlayerTurn(Player (*player))
@@ -151,8 +194,26 @@ void runPlayerTurn(Player (*player))
     /* Cleans the buffer to store a new message */
     memset(buffer, 0, sizeof(buffer));
     
+    /* Calls the function to let the player select the piece (the function returns the piece which the player choosed) */
+    int choosen_piece = selectPiece(buffer, player)-1;
+
+    /* Cleans the square which the player actually is */
+    clean_actualSquare(BoardMatrix, &player->pieces[choosen_piece], player->PieceLetter);
+
+    /* Checks if there's another player in the square which the player will be, if so, sends this player to square 0 */
+    char * playerDead = check_square(BoardMatrix, player->pieces[choosen_piece].square.squareNumber + dice_result, player->pieces[choosen_piece].square.initcolumn);
+
+    /* Copies the playerDead to the playerInsideSquare variable */
+    memset(playerInsideSquare, 0, sizeof(playerInsideSquare));
+    strcpy(playerInsideSquare, playerDead); // apparently this is the problem
+
+    /* Walks the player through the board until the value of it's actual square plus the additional squares */
+    walk(BoardMatrix, player, choosen_piece, dice_result, player->pieces[choosen_piece].square.initcolumn);
+    
     /* Increment the squareNumber at the player's structure with the value of the dice */
-    player->pieces[selectPiece(buffer, player)].square.squareNumber += dice_result;
+    player->pieces[choosen_piece].square.squareNumber += dice_result;
+
+    free(playerDead);
 
     return;
 }
@@ -192,8 +253,8 @@ void printPlayers(Player players[], int playersNumber, int piece)
         printf("PLAYER %d --> \n", i);
         printf("PLAYER NAME: %s\n", players[i].name);
         printf("PLAYER PIECE NUMBER: %d\n", players[i].pieces[piece].number);
-        printf("PLAYER PIECE COLUMN: %d\n", players[i].pieces[piece].square.column);
-        printf("PLAYER PIECE LINE: %d\n",  players[i].pieces[piece].square.line);
+        printf("PLAYER PIECE COLUMN: %d\n", players[i].pieces[piece].square.initcolumn);
+        printf("PLAYER PIECE LINE: %d\n",  players[i].pieces[piece].square.initline);
         printf("PLAYER PIECE SQUARELINE: %d\n",  players[i].pieces[piece].square.squareLine);
         printf("PLAYER PIECE SQUARENUMBER: %d\n",  players[i].pieces[piece].square.squareNumber);
         printf("PLAYER END <-- \n");

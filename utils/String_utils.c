@@ -14,3 +14,11 @@ void writeString(char (*matrix)[MAX_COLUMNS], char text[], int line, int column)
     return;
 }
 
+void writeStringDebug(char (*matrix)[MAX_COLUMNS], char text[], int line, int column)
+{
+    writeString(matrix, "                         ", line, column);
+
+    writeString(matrix, text, line, column);
+
+    return;
+}
