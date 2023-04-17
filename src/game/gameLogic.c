@@ -1,12 +1,12 @@
 #include "gameLogic.h"
 
-void walk(char (*matrix)[MAX_COLUMNS], Player (*player), int piece, int additional_squares, int column)
+void walk(char (*matrix)[MAX_COLUMNS], Player player, int piece, int additional_squares, int column)
 {
-    int final_square = player->pieces[piece].square.squareNumber + additional_squares;
+    int final_square = player.pieces[piece].square.squareNumber + additional_squares;
     int result = getLine(final_square);
     int pieceM = piece+1;
 
-    matrix[result][column] = player->PieceLetter;
+    matrix[result][column] = player.PieceLetter;
     matrix[result][column+1] = (char) (pieceM)+'0';
 
     return;

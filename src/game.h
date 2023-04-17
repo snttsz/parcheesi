@@ -40,12 +40,13 @@ void runPlayerTurn(Player (*player));
 /* Handles with the piece choosing during the player's turn */
 int selectPiece(char (*buffer), Player (*player), int diceResult);
 
-/*  */
+/* Updates the player and board when the some player is caught by another */
 void updatePlayer(Player (*players));
 
-/* */
+/* If one player is caught by another, returns the index of the player. Otherwise, returns -1 */
 int getPlayer();
 
+/* Variable that will store a player caught by another */
 static char playerInsideSquare[3];
 
 /* EXTERN FUNCTIONS */
@@ -57,39 +58,25 @@ extern void constructBoard();
 extern int getPlayerTurn();
 extern void resetPlayerTurn();
 extern void nextPlayerTurn();
-extern void writePlayerTurn(char (*BoardMatrix)[MAX_COLUMNS], Player *(player));
+extern void writePlayerTurn(char (*BoardMatrix)[MAX_COLUMNS], Player player);
 extern void clean_dice(char (*BoardMatrix)[MAX_COLUMNS]);
-extern void clean_actualSquare(char (*BoardMatrix)[MAX_COLUMNS], Piece (*piece), char PlayerLetter);
+extern void clean_actualSquare(char (*BoardMatrix)[MAX_COLUMNS], Piece piece, char PlayerLetter);
 extern void clean_gameStatePlayerMessages(char (*BoardMatrix)[MAX_COLUMNS]);
-extern bool check_piece(Player (*player), int piece);
+extern bool check_piece(Player player, int piece);
+extern bool checkPlayer(Player player);
+extern bool checkPlayers(Player players[], int numPlayers);
+extern bool check_squareQuantity(Piece piece, int diceResult);
 
 
 /* Logic Functions -> Declared at gameLogic.c */
-extern void walk(char (*matrix)[MAX_COLUMNS], Player (*player), int piece, int additional_squares, int column);
+extern void walk(char (*matrix)[MAX_COLUMNS], Player player, int piece, int additional_squares, int column);
 extern int roll_dice(char (*matrix)[MAX_COLUMNS]);
 extern char * check_square(char (*matrix)[MAX_COLUMNS], int squareNumber, int column);
 extern bool check_special_squares(char matrix[][MAX_COLUMNS], int actualSquare, int diceResult, int column);
-
+extern void placeFinalSquares(char (*matrix)[MAX_COLUMNS], Piece piece, int playerNumber);
 
 /* Utils -> Declared at String_Utils.c */
 /* write inside the Board */
 extern void writeString(char (*matrix)[MAX_COLUMNS], char text[], int line, int column);
-
-
-
-
-
-
-
-
-
-
-
-
-/* =========== */
-/* THIS MUST BE REMOVED, IT'S JUST FOR DEBUG PURPOSES */
-void printPlayers(Player players[], int playersNumber, int piece);
-/* =========== */
-
 
 #endif

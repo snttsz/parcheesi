@@ -85,7 +85,7 @@ int selectPiece(char(*buffer), Player(*player), int diceResult)
             Messages about which piece the player wants to move x squares 
             It is at first checked if the piece number i is available (if the piece is not out of the game yet)
             */
-            if (check_piece(player, i-1))
+            if (check_piece(*player, i-1))
             {
                 sprintf(buffer, "Press %d to move piece %c%d", i, player->PieceLetter, i);
                 writeString(BoardMatrix, buffer, 36+i, 87);
@@ -103,7 +103,7 @@ int selectPiece(char(*buffer), Player(*player), int diceResult)
         If the user selects an invalid piece, then it shows a message accusing the mistake
         and waits for the user to input a valid piece
         */
-        if (!check_piece(player, choosen_piece-1) || check_special_squares(BoardMatrix, player->pieces[choosen_piece-1].square.squareNumber, diceResult, player->pieces[choosen_piece-1].square.initcolumn))
+        if (!check_piece(*player, choosen_piece-1) || check_special_squares(BoardMatrix, player->pieces[choosen_piece-1].square.squareNumber, diceResult, player->pieces[choosen_piece-1].square.initcolumn) || check_squareQuantity(player->pieces[choosen_piece-1], diceResult))
         {
             writeString(BoardMatrix, "You can't move this piece!", 45, 85);
             system(command);
@@ -128,12 +128,12 @@ void updatePlayer(Player(*players))
         return;
     }
 
-    Player playerSelected = players[player];
+    Player * playerSelected = &players[player];
     int pieceNumber = atoi(&playerInsideSquare[1]) -1;
 
-    playerSelected.pieces[pieceNumber].square.squareNumber = 0;
-    BoardMatrix[3][playerSelected.pieces[pieceNumber].square.init0column] = playerSelected.PieceLetter;
-    BoardMatrix[3][playerSelected.pieces[pieceNumber].square.init0column+1] = playerInsideSquare[1];
+    playerSelected->pieces[pieceNumber].square.squareNumber = 0;
+    BoardMatrix[3][playerSelected->pieces[pieceNumber].square.init0column] = playerSelected->PieceLetter;
+    BoardMatrix[3][playerSelected->pieces[pieceNumber].square.init0column+1] = playerInsideSquare[1];
 
     return;
 }
@@ -174,9 +174,9 @@ void runPlayerTurn(Player (*player))
     /* Will clean the messages of the last player's turn of the gamestate panel */
     clean_gameStatePlayerMessages(BoardMatrix);
     /* Will write the player's name inside the board where it's needed */
-    writePlayerTurn(BoardMatrix, player);
+    writePlayerTurn(BoardMatrix, *player);
 
-    /* Clears the terminal */
+    /* Cleans the terminal */
     system(command);
     /* Prints the Board with the updated informations and ask to the player to press any key to roll the dice */
     printMatrix();
@@ -198,7 +198,7 @@ void runPlayerTurn(Player (*player))
     int choosen_piece = selectPiece(buffer, player, dice_result)-1;
 
     /* Cleans the square which the player actually is */
-    clean_actualSquare(BoardMatrix, &player->pieces[choosen_piece], player->PieceLetter);
+    clean_actualSquare(BoardMatrix, player->pieces[choosen_piece], player->PieceLetter);
 
     /* Checks if there's another player in the square which the player will be, if so, sends this player to square 0 */
     char * playerDead = check_square(BoardMatrix, player->pieces[choosen_piece].square.squareNumber + dice_result, player->pieces[choosen_piece].square.initcolumn);
@@ -208,58 +208,13 @@ void runPlayerTurn(Player (*player))
     strcpy(playerInsideSquare, playerDead); // apparently this is the problem
 
     /* Walks the player through the board until the value of it's actual square plus the additional squares */
-    walk(BoardMatrix, player, choosen_piece, dice_result, player->pieces[choosen_piece].square.initcolumn);
+    walk(BoardMatrix, *player, choosen_piece, dice_result, player->pieces[choosen_piece].square.initcolumn);
     
     /* Increment the squareNumber at the player's structure with the value of the dice */
     player->pieces[choosen_piece].square.squareNumber += dice_result;
 
     /* free the pointer where playerDead's allocated */
     free(playerDead);
-
-    return;
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-void printPlayers(Player players[], int playersNumber, int piece)
-{
-    for (int i = 0; i<= playersNumber; i++)
-    {
-        printf("PLAYER %d --> \n", i);
-        printf("PLAYER NAME: %s\n", players[i].name);
-        printf("PLAYER PIECE NUMBER: %d\n", players[i].pieces[piece].number);
-        printf("PLAYER PIECE COLUMN: %d\n", players[i].pieces[piece].square.initcolumn);
-        printf("PLAYER PIECE LINE: %d\n",  players[i].pieces[piece].square.initline);
-        printf("PLAYER PIECE SQUARELINE: %d\n",  players[i].pieces[piece].square.squareLine);
-        printf("PLAYER PIECE SQUARENUMBER: %d\n",  players[i].pieces[piece].square.squareNumber);
-        printf("PLAYER END <-- \n");
-    }
 
     return;
 }

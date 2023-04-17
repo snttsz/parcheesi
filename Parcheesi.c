@@ -27,13 +27,20 @@ int main()
 
     InitGame(players, players_size);    
 
-    while(1)
+    while(checkPlayers(players, players_size))
     {
-        runPlayerTurn(&players[getPlayerTurn()]);
-        updatePlayer(players);
-        getchar();
-        system(command);
-        nextPlayerTurn();
+        if (checkPlayer(players[getPlayerTurn()]))
+        {
+            runPlayerTurn(&players[getPlayerTurn()]);
+            updatePlayer(players);
+            getchar();
+            system(command);
+            nextPlayerTurn();
+        }
+        else
+        {
+            nextPlayerTurn();
+        }
         
     }
 

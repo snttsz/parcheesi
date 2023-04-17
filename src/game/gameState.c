@@ -27,10 +27,10 @@ void nextPlayerTurn()
     return;
 }
 
-void writePlayerTurn(char (*BoardMatrix)[MAX_COLUMNS], Player *(player))
+void writePlayerTurn(char (*BoardMatrix)[MAX_COLUMNS], Player player)
 {
-    writeString(BoardMatrix, player->name, 11, 103);
-    writeString(BoardMatrix, player->name, 29, 103);
+    writeString(BoardMatrix, player.name, 11, 103);
+    writeString(BoardMatrix, player.name, 29, 103);
 
     writeString(BoardMatrix, "Press any key to roll the dice", 32, 84);
 
@@ -51,11 +51,11 @@ void clean_dice(char (*BoardMatrix)[MAX_COLUMNS])
     return;
 }
 
-void clean_actualSquare(char (*BoardMatrix)[MAX_COLUMNS], Piece (*piece), char playerLetter)
+void clean_actualSquare(char (*BoardMatrix)[MAX_COLUMNS], Piece piece, char playerLetter)
 {
-    int squareNumber = piece->square.squareNumber;
-    int initcolumn = piece->square.initcolumn;
-    int init0column = piece->square.init0column;
+    int squareNumber = piece.square.squareNumber;
+    int initcolumn = piece.square.initcolumn;
+    int init0column = piece.square.init0column;
     int line = getLine(squareNumber);
 
     /* Cleans the init square of the player */
@@ -96,13 +96,6 @@ void clean_gameStatePlayerMessages(char (*BoardMatrix)[MAX_COLUMNS])
     return;
 }
 
-void reDraw_specialSquares(char (*BoardMatrix)[MAX_COLUMNS], int squareNumber, int column)
-{
-
-
-    return;
-}
-
 int getLine(int squareNumber)
 {
     return (3 * squareNumber -1) + 3;;
@@ -114,7 +107,7 @@ bool checkPlayer(Player player)
 
     for(int i = 0; i <= 3; i++)
     {
-        if(!check_piece(&player, i))
+        if(!check_piece(player, i))
         {
             counter++;
         }
@@ -138,12 +131,33 @@ bool checkPlayers(Player players[], int numPlayers)
     return false ? counter == 4 : true;
 }
 
-bool check_piece(Player (*player), int piece)
+bool check_piece(Player player, int piece)
 {
-    if (player->pieces[piece].square.squareNumber <= 15)
+    if (player.pieces[piece].square.squareNumber < 15)
     {
         return true;
     }
 
     return false;
+}
+
+bool check_squareQuantity(Piece piece, int diceResult)
+{
+    int actualSquare = piece.square.squareNumber;
+    if (actualSquare >= 8)
+    {
+        if (actualSquare + diceResult > 15)
+        {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+void placeFinalSquares(char (*matrix)[MAX_COLUMNS], Piece piece, int playerNumber)
+{
+
+
+    return;
 }
