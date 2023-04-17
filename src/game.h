@@ -73,7 +73,7 @@ extern void walk(char (*matrix)[MAX_COLUMNS], Player player, int piece, int addi
 extern int roll_dice(char (*matrix)[MAX_COLUMNS]);
 extern char * check_square(char (*matrix)[MAX_COLUMNS], int squareNumber, int column);
 extern bool check_special_squares(char matrix[][MAX_COLUMNS], int actualSquare, int diceResult, int column);
-extern void placeFinalSquares(char (*matrix)[MAX_COLUMNS], Piece piece, int playerNumber);
+extern void placeFinalSquares(char (*matrix)[MAX_COLUMNS], Piece piece, char playerLetter);
 
 /* Utils -> Declared at String_Utils.c */
 /* write inside the Board */

@@ -173,8 +173,8 @@ void final_square()
 
     for (j = 49; j <= 52; j++)
     {
-        writeString(BoardMatrix, "__", j, 15);
-        writeString(BoardMatrix, "__", j, 27);
+        writeString(BoardMatrix, "__", j, 14);
+        writeString(BoardMatrix, "__", j, 26);
         writeString(BoardMatrix, "__", j, 38);
         writeString(BoardMatrix, "__", j, 50);
     }

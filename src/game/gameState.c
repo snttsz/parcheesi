@@ -98,7 +98,7 @@ void clean_gameStatePlayerMessages(char (*BoardMatrix)[MAX_COLUMNS])
 
 int getLine(int squareNumber)
 {
-    return (3 * squareNumber -1) + 3;;
+    return 3 * squareNumber + 2;;
 }
 
 bool checkPlayer(Player player)
@@ -155,9 +155,31 @@ bool check_squareQuantity(Piece piece, int diceResult)
     return false;
 }
 
-void placeFinalSquares(char (*matrix)[MAX_COLUMNS], Piece piece, int playerNumber)
+void placeFinalSquares(char (*matrix)[MAX_COLUMNS], Piece piece, char playerLetter)
 {
+    int playerNumber = 0;
+    int pieceNumber = piece.number-1;
 
+
+    if (playerLetter == 'B')
+    {
+        playerNumber = 1;
+    }
+    else if (playerLetter == 'G')
+    {  
+        playerNumber = 2;
+    }
+    else if (playerLetter == 'Y')
+    {
+        playerNumber = 3;
+    }
+
+    
+    int line = 49 + pieceNumber; 
+    int column = 14 + (12 * playerNumber);
+
+    matrix[line][column] = playerLetter;
+    matrix[line][column+1] = (char) piece.number + '0';
 
     return;
 }

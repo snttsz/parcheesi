@@ -40,7 +40,7 @@ bool check_piece(Player player, int piece);
 /* Checks if the player can move one specific piece without exceed the square's limit */
 bool check_squareQuantity(Piece piece, int diceResult);
 /* Place the piece at the final square when needed */
-void placeFinalSquares(char (*matrix)[MAX_COLUMNS], Piece piece, int playerNumber); 
+void placeFinalSquares(char (*matrix)[MAX_COLUMNS], Piece piece, char playerLetter); 
 
 extern void writeString(char (*matrix)[MAX_COLUMNS], char text[], int line, int column);
 

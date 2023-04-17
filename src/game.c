@@ -99,6 +99,14 @@ int selectPiece(char(*buffer), Player(*player), int diceResult)
         printf("\t\t\t\t\t\t\t\t\t\t\t    Answer: ");
         scanf("%d", &choosen_piece);
 
+        if (player->pieces[choosen_piece-1].square.squareNumber + diceResult == 15)
+        {
+            placeFinalSquares(BoardMatrix, player->pieces[choosen_piece-1], player->PieceLetter);
+            clean_actualSquare(BoardMatrix, player->pieces[choosen_piece-1], player->PieceLetter);
+            player->pieces[choosen_piece-1].square.squareNumber = 15;
+            return 0;
+        }
+
         /* 
         If the user selects an invalid piece, then it shows a message accusing the mistake
         and waits for the user to input a valid piece
@@ -159,6 +167,7 @@ int getPlayer()
     {
         result = 3;
     }
+
     return result;
 }
 
@@ -196,6 +205,10 @@ void runPlayerTurn(Player (*player))
     
     /* Calls the function to let the player select the piece (the function returns the piece which the player choosed) */
     int choosen_piece = selectPiece(buffer, player, dice_result)-1;
+    if (choosen_piece == -1)
+    {
+        return;
+    }
 
     /* Cleans the square which the player actually is */
     clean_actualSquare(BoardMatrix, player->pieces[choosen_piece], player->PieceLetter);
@@ -205,7 +218,7 @@ void runPlayerTurn(Player (*player))
 
     /* Copies the playerDead to the playerInsideSquare variable */
     memset(playerInsideSquare, 0, sizeof(playerInsideSquare));
-    strcpy(playerInsideSquare, playerDead); // apparently this is the problem
+    strcpy(playerInsideSquare, playerDead);
 
     /* Walks the player through the board until the value of it's actual square plus the additional squares */
     walk(BoardMatrix, *player, choosen_piece, dice_result, player->pieces[choosen_piece].square.initcolumn);
